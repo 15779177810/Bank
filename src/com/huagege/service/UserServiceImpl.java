@@ -28,8 +28,10 @@ public class UserServiceImpl implements UserService {
 		session.beginTransaction();
 		User userFound =  (User) session.get(User.class, username);
 		User user = new User(username,MD5Util.md5(password));
-		if(user.equals(userFound))
+		if(user.equals(userFound)){
+			session.close();
 			return userFound;
+		}
 		else
 			throw new UserException("账号或密码错误");
 	}
@@ -42,18 +44,19 @@ public class UserServiceImpl implements UserService {
 		Session session;
 		User user = null;
 		session = factory.openSession();
-			session.beginTransaction();
-			if(session.get(User.class, username)!=null)
-				throw new UserException(username+"账号已存在");
-			user = new User();//创建新用户
-			user.setPassword(MD5Util.md5(password));
-			user.setUsername(username);
-			user.setCreateTime(new Date(System.currentTimeMillis()));
-			Transfer transfer = new Transfer(username, 0, "开户", new Date(System.currentTimeMillis()));//创建新账户
-			transfer.setBalance(0);
-			session.save(user);
-			session.save(transfer);
-			session.getTransaction().commit();
+		session.beginTransaction();
+		if(session.get(User.class, username)!=null)
+			throw new UserException(username+"账号已存在");
+		user = new User();//创建新用户
+		user.setPassword(MD5Util.md5(password));
+		user.setUsername(username);
+		user.setCreateTime(new Date(System.currentTimeMillis()));
+		Transfer transfer = new Transfer(username, 0, "开户", new Date(System.currentTimeMillis()));//创建新账户
+		transfer.setBalance(0);
+		session.save(user);
+		session.save(transfer);
+		session.getTransaction().commit();
+		session.close();
 		return user;
 	}
 
