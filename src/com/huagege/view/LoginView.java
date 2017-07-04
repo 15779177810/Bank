@@ -166,9 +166,8 @@ public class LoginView extends javax.swing.JFrame {
     				new MainView(user).setVisible(true); 
     				this.dispose();
     			}
-    		} catch (Exception e) {
+    		} catch (UserException | TransferException e) {
     			JOptionPane.showMessageDialog(null, "用户名或密码错误");
-    			e.printStackTrace();
     		}
         }
     }
