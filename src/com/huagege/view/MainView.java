@@ -8,7 +8,10 @@ package com.huagege.view;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 import com.huagege.bean.Transfer;
 import com.huagege.bean.User;
 import com.huagege.exception.TransferException;
@@ -76,6 +79,26 @@ public class MainView extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
+        jButton4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jLabel1.setText("金额：");
 
@@ -115,6 +138,8 @@ public class MainView extends javax.swing.JFrame {
                     return canEdit [columnIndex];
                 }
             };
+        RowSorter sorter = new TableRowSorter(tableModel);
+        jTable1.setRowSorter(sorter);
         jTable1.setModel(tableModel);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
@@ -193,7 +218,7 @@ public class MainView extends javax.swing.JFrame {
 		tableModel.addRow(drawTransfer.toDataArray());
 		jTextField1.setText("");
 		} catch (TransferException e) {
-			JOptionPane.showMessageDialog(null, "交易失败");
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "输入有误");
 		}
@@ -212,7 +237,7 @@ public class MainView extends javax.swing.JFrame {
 		tableModel.addRow(drawTransfer.toDataArray());
 		jTextField1.setText("");
 		} catch (TransferException e) {
-			JOptionPane.showMessageDialog(null, "交易失败");
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "输入有误");
 		}
@@ -244,10 +269,12 @@ public class MainView extends javax.swing.JFrame {
 		tableModel.addRow(drawTransfer.toDataArray());
 		jTextField1.setText("");
 		jTextField2.setText("");
-		} catch (TransferException |ArrayIndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(null, "交易失败");
+		} catch (TransferException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "请正确输入");
+		}catch( ArrayIndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(null, "交易失败");
 		}
     }
 

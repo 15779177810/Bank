@@ -32,6 +32,9 @@ public class TransferServiceImpl implements TransferService {
 		if(money<=0)
 			throw new TransferException("存款金额有误");
 		
+		if(money>20000)
+			throw new TransferException("交易金额限制20000元");
+		
 		Session session;
 		session = factory.openSession();
 		Transfer transfer = null;
@@ -63,6 +66,8 @@ public class TransferServiceImpl implements TransferService {
 		
 		if(money<=0)
 			throw new TransferException("取款金额有误");
+		if(money >20000)
+			throw new TransferException("交易金额限制20000元");
 		
 		Session session;
 		Transfer transfer = null;
@@ -100,6 +105,10 @@ public class TransferServiceImpl implements TransferService {
 		
 		if(money<=0)
 			throw new TransferException("转账金额有误");
+		
+		if(money >20000)
+			throw new TransferException("交易金额限制20000元");
+		
 		Transfer userLast = null;
 		Session session;
 		session = factory.openSession();
