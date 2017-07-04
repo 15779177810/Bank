@@ -84,10 +84,7 @@ public class TransferServiceImpl implements TransferService {
 			transfer.setBalance(last.getBalance()-money);//余额为最后一次交易记录的月+存款
 			session.save(transfer);
 			session.getTransaction().commit();
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-		}finally{
+		} finally{
 			if(session!=null)
 				session.close();
 		}
